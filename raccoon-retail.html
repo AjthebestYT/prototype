@@ -3,138 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raccoon Retail - Learning V4</title>
+    <title>Learning V4 - Loading App</title>
     <style>
-        :root {
-            --bg-primary: #0a0b0a;
-            --bg-secondary: #111211;
-            --bg-card: #171817;
-            --text-main: #ffffff;
-            --text-muted: #808280;
-            --theme-lime: #a3e635;
-        }
-
         body {
             margin: 0;
             padding: 0;
-            background-color: var(--bg-primary);
-            color: var(--text-main);
+            background-color: #0a0b0a;
+            color: #ffffff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            background-image: radial-gradient(circle at 50% 50%, #121e05 0%, var(--bg-primary) 70%);
         }
-
-        .launch-box {
-            background-color: var(--bg-secondary);
-            border: 2px solid var(--theme-lime);
-            border-radius: 20px;
-            padding: 40px;
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            border-left-color: #a3e635;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .status-container {
             text-align: center;
-            max-width: 450px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
-
-        .icon-header {
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-
         h2 {
-            margin: 0 0 12px 0;
-            color: var(--text-main);
-            font-size: 28px;
-        }
-
-        p {
-            color: var(--text-muted);
-            font-size: 15px;
-            line-height: 1.5;
-            margin: 0 0 30px 0;
-        }
-
-        .launch-btn {
-            background-color: var(--theme-lime);
-            color: #000000;
-            border: none;
-            padding: 14px 28px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.1s ease, background-color 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .launch-btn:hover {
-            background-color: #bbf746;
-            transform: translateY(-2px);
-        }
-
-        .back-link {
-            display: block;
-            margin-top: 20px;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .back-link:hover {
-            color: var(--text-main);
+            font-size: 18px;
+            color: #808280;
+            margin: 0;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
 
-    <!-- Launcher Module -->
-    <div class="launch-box">
-        <div class="icon-header">🦝</div>
-        <h2>Raccoon Retail</h2>
-        <p>Click below to open the application window inside a secure, unblocked frame layer container.</p>
-        
-        <!-- Interactive Trigger Button Component -->
-        <button class="launch-btn" onclick="launchInjectedBlankTab()">
-            ▶ Launch Application
-        </button>
-
-        <a href="index.html" class="back-link">← Return to Dashboard</a>
+    <div class="status-container">
+        <div class="loading-spinner"></div>
+        <h2>Initializing unblocked application layer...</h2>
     </div>
 
-    <!-- Script Layer for Tab Redirection -->
+    <!-- Tab Cloaking Engine Script -->
     <script>
-        function launchInjectedBlankTab() {
-            // 1. Spins up a completely sterile empty webpage tab instance
-            var targetWin = window.open("about:blank", "_blank");
+        window.onload = function() {
+            // 1. Spawns an anonymous, history-masked clean browser tab
+            var maskedWindow = window.open("about:blank", "_blank");
             
-            if (!targetWin) {
-                alert("Please allow pop-ups for this site to run the app layer.");
+            if (!maskedWindow) {
+                alert("Pop-up blocked! Please allow pop-ups for this dashboard to run application cloaking.");
+                // Redirect back safely if the pop-up fails
+                window.location.replace("index.html");
                 return;
             }
 
-            // 2. Clear out any browser-default margin spacing rules inside the new window
-            targetWin.document.body.style.margin = "0";
-            targetWin.document.body.style.padding = "0";
-            targetWin.document.body.style.backgroundColor = "#000000";
-            targetWin.document.body.style.overflow = "hidden";
-
-            // 3. Dynamically instantiate an iframe straight into the blank page's document object model
-            var appIframe = targetWin.document.createElement("iframe");
-            appIframe.style.width = "100vw";
-            appIframe.style.height = "100vh";
-            appIframe.style.border = "none";
-            appIframe.setAttribute("allowfullscreen", "true");
+            // 2. Clear out margins and establish canvas properties on the blank layout document
+            var doc = maskedWindow.document;
+            doc.body.style.margin = "0";
+            doc.body.style.padding = "0";
+            doc.body.style.backgroundColor = "#000000";
+            doc.body.style.overflow = "hidden";
             
-            // Uses an open-distribution CDN stream link that loads safely across frame domains
-            appIframe.src = "https://gamedistribution.com";
+            // Mask the favicon and tab title header inside the browser window
+            doc.title = "Google Drive"; 
+            
+            var favicon = doc.createElement("link");
+            favicon.rel = "icon";
+            favicon.href = "https://gstatic.com";
+            doc.head.appendChild(favicon);
 
-            // 4. Force inject the framework element into the active tab instance viewport
-            targetWin.document.body.appendChild(appIframe);
-        }
+            // 3. Dynamically instantiate the HTML5 distribution node container element
+            var gameIframe = doc.createElement("iframe");
+            gameIframe.style.width = "100vw";
+            gameIframe.style.height = "100vh";
+            gameIframe.style.border = "none";
+            gameIframe.style.display = "block";
+            gameIframe.setAttribute("allowfullscreen", "true");
+            
+            // Core game asset distribution mirror url
+            gameIframe.src = "https://gamedistribution.com";
+
+            // 4. Force push the game frame straight into the masked layout DOM
+            doc.body.appendChild(gameIframe);
+
+            // 5. Clean redirect your main hub page back to safety instantly in the background
+            window.location.replace("index.html");
+        };
     </script>
 
 </body>
