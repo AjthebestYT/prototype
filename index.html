@@ -20,11 +20,13 @@
 function openRaccoonGame() {
     document.getElementById('gameFrame').src = "https://itch.io";
     document.getElementById('gameModal').style.display = "flex";
+// Replace your old function with this updated version:
+function openRaccoonGame() {
+    // This alternative link bypasses the Local Network error entirely
+    document.getElementById('gameFrame').src = "https://kbhgames.com";
+    document.getElementById('gameModal').style.display = "flex";
 }
-function closeRaccoonGame() {
-    document.getElementById('gameFrame').src = "";
-    document.getElementById('gameModal').style.display = "none";
-}
+
 </script>
 
 
