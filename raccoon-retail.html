@@ -5,69 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raccoon Retail - Learning V4</title>
     <style>
+        :root {
+            --bg-primary: #0a0b0a;
+            --bg-secondary: #111211;
+            --bg-card: #171817;
+            --text-main: #ffffff;
+            --text-muted: #808280;
+            --theme-lime: #a3e635;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background-color: #0b0c0b;
-            color: #ffffff;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
             overflow: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #121e05 0%, var(--bg-primary) 70%);
         }
-        .header-bar {
-            background-color: #111211;
-            padding: 12px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #1c1d1c;
+
+        .launch-box {
+            background-color: var(--bg-secondary);
+            border: 2px solid var(--theme-lime);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 450px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
-        .back-btn {
-            background-color: #a3e635;
+
+        .icon-header {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin: 0 0 12px 0;
+            color: var(--text-main);
+            font-size: 28px;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.5;
+            margin: 0 0 30px 0;
+        }
+
+        .launch-btn {
+            background-color: var(--theme-lime);
             color: #000000;
-            text-decoration: none;
-            padding: 8px 16px;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
             font-weight: bold;
-            border-radius: 6px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.1s ease, background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .launch-btn:hover {
+            background-color: #bbf746;
+            transform: translateY(-2px);
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: var(--text-muted);
+            text-decoration: none;
             font-size: 14px;
         }
-        .back-btn:hover {
-            background-color: #bbf746;
-        }
-        .game-title {
-            margin: 0;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .game-container {
-            flex: 1;
-            width: 100%;
-            height: 100%;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background-color: #000;
+
+        .back-link:hover {
+            color: var(--text-main);
         }
     </style>
 </head>
 <body>
 
-    <!-- Top Navigation Bar -->
-    <div class="header-bar">
-        <span class="game-title">🦝 Raccoon Retail</span>
-        <a href="index.html" class="back-btn">← Back to Dashboard</a>
+    <!-- Launcher Module -->
+    <div class="launch-box">
+        <div class="icon-header">🦝</div>
+        <h2>Raccoon Retail</h2>
+        <p>Click below to open the application window inside a secure, unblocked frame layer container.</p>
+        
+        <!-- Interactive Trigger Button Component -->
+        <button class="launch-btn" onclick="launchInjectedBlankTab()">
+            ▶ Launch Application
+        </button>
+
+        <a href="index.html" class="back-link">← Return to Dashboard</a>
     </div>
 
-    <!-- Fullscreen Game Embed -->
-    <div class="game-container">
-<!-- Update the iframe src inside raccoon-retail.html to a direct canvas mirror -->
-<iframe src="https://gamedistribution.com" allowfullscreen></iframe>
+    <!-- Script Layer for Tab Redirection -->
+    <script>
+        function launchInjectedBlankTab() {
+            // 1. Spins up a completely sterile empty webpage tab instance
+            var targetWin = window.open("about:blank", "_blank");
+            
+            if (!targetWin) {
+                alert("Please allow pop-ups for this site to run the app layer.");
+                return;
+            }
 
-    </div>
+            // 2. Clear out any browser-default margin spacing rules inside the new window
+            targetWin.document.body.style.margin = "0";
+            targetWin.document.body.style.padding = "0";
+            targetWin.document.body.style.backgroundColor = "#000000";
+            targetWin.document.body.style.overflow = "hidden";
+
+            // 3. Dynamically instantiate an iframe straight into the blank page's document object model
+            var appIframe = targetWin.document.createElement("iframe");
+            appIframe.style.width = "100vw";
+            appIframe.style.height = "100vh";
+            appIframe.style.border = "none";
+            appIframe.setAttribute("allowfullscreen", "true");
+            
+            // Uses an open-distribution CDN stream link that loads safely across frame domains
+            appIframe.src = "https://gamedistribution.com";
+
+            // 4. Force inject the framework element into the active tab instance viewport
+            targetWin.document.body.appendChild(appIframe);
+        }
+    </script>
 
 </body>
 </html>
