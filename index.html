@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learning V4</title>
     <style>
-        /* Restored Original Style Variables */
+        /* Exact Original Theme & Variables */
         :root {
             --bg-primary: #0b0c0b;
             --bg-secondary: #121312;
@@ -26,7 +26,7 @@
             overflow: hidden;
         }
 
-        /* Sidebar Component */
+        /* Sidebar Navigation Component */
         .sidebar {
             width: 240px;
             background-color: var(--bg-secondary);
@@ -43,7 +43,6 @@
             gap: 10px;
             font-size: 20px;
             font-weight: bold;
-            color: var(--text-main);
         }
 
         .logo-icon {
@@ -98,7 +97,7 @@
             margin-top: auto;
         }
 
-        /* Main Workspace Content */
+        /* Workspace Main Content Frame */
         .main-content {
             flex: 1;
             padding: 40px;
@@ -143,11 +142,12 @@
             font-size: 16px;
         }
 
-        /* Dashboard App/Game Cards Layout */
+        /* App Grid Configuration */
         .app-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 24px;
+            margin-bottom: 30px;
         }
 
         .app-card {
@@ -160,18 +160,17 @@
             gap: 16px;
             cursor: pointer;
             position: relative;
-            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
         .app-card:hover {
             transform: translateY(-4px);
             border-color: #3b5c0e;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
         }
 
-        .app-card.featured {
-            border-color: #558c0a;
-            box-shadow: 0 0 20px rgba(163, 230, 53, 0.1);
+        .app-card.featured-active {
+            border-color: var(--theme-lime);
+            box-shadow: 0 0 15px rgba(163, 230, 53, 0.25);
         }
 
         .app-icon {
@@ -206,63 +205,41 @@
             font-size: 14px;
         }
 
-        /* Pop-up Fullscreen Game Container */
-        .modal-overlay {
+        /* Inline Game Display Stream Screen */
+        .game-display-panel {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(4, 5, 4, 0.95);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-box {
-            background: var(--bg-secondary);
+            background-color: var(--bg-secondary);
             border: 2px solid var(--theme-lime);
-            padding: 20px;
             border-radius: 20px;
-            position: relative;
-            width: 840px;
+            padding: 24px;
+            margin-top: 24px;
             text-align: center;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            position: relative;
         }
 
-        .close-button {
-            position: absolute;
-            top: -45px;
-            right: 0;
-            background: var(--theme-lime);
+        .close-stream-btn {
+            background-color: var(--theme-lime);
             color: #000000;
             border: none;
             padding: 8px 16px;
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
-            transition: background 0.2s;
+            margin-bottom: 15px;
         }
 
-        .close-button:hover {
-            background: #bbf746;
-        }
-
-        .modal-box h2 {
-            color: var(--theme-lime);
-            margin-top: 0;
-            margin-bottom: 12px;
-            font-size: 24px;
+        .close-stream-btn:hover {
+            background-color: #bbf746;
         }
 
         iframe {
             background: #000;
-            border-radius: 10px;
+            border-radius: 12px;
             border: none;
+            max-width: 100%;
         }
 
-        /* Footer Info Bar Component */
+        /* Bottom Status Bars */
         .footer-status-bar {
             position: fixed;
             bottom: 20px;
@@ -278,27 +255,12 @@
             border-radius: 30px;
             font-size: 13px;
             color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .status-pill strong {
-            color: var(--text-main);
-        }
-
-        .indicator-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--theme-lime);
-            border-radius: 50%;
-            display: inline-block;
         }
     </style>
 </head>
 <body>
 
-    <!-- Left Navigation Bar Module -->
+    <!-- Original Left Navigation Sidebar -->
     <aside class="sidebar">
         <div class="logo-area">
             <span class="logo-icon">⭐</span> Learning V4
@@ -320,7 +282,7 @@
         <div class="system-badge">V4</div>
     </aside>
 
-    <!-- Right Workspace Dashboard Window -->
+    <!-- Right Content Dashboard Space -->
     <main class="main-content">
         <div class="top-nav">
             <h4>Home</h4>
@@ -331,7 +293,7 @@
         <h1 class="welcome-title">Welcome back</h1>
         <p class="subtitle">almost 1 year old</p>
 
-        <!-- Dynamic Content Grid Container -->
+        <!-- Grid Cards Setup -->
         <div class="app-grid">
             
             <div class="app-card">
@@ -355,7 +317,28 @@
                 <span class="arrow-indicator">→</span>
             </div>
 
-            <!-- 🦝 NEW DYNAMIC EMBEDDED APPLICATION CARD 🦝 -->
-            <div class="app-card featured" onclick="openRaccoonGame()">
+            <!-- Fixed Click Target Raccoon Retail Card Component -->
+            <div id="raccoonButtonCard" class="app-card" onclick="toggleRaccoonFrame()">
                 <div class="app-icon" style="background-color: #273e07;">🦝</div>
                 <h3>Raccoon Retail</h3>
+                <p>Play the unblocked supermarket cleaning simulation directly here.</p>
+                <span id="cardIndicatorSpan" class="arrow-indicator" style="color: var(--theme-lime)">▶</span>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon">⚙️</div>
+                <h3>Settings</h3>
+                <p>Color themes</p>
+                <span class="arrow-indicator">→</span>
+            </div>
+        </div>
+
+        <!-- Integrated Inline Play Field (Shows underneath your grid layout) -->
+        <div id="inlineGameDisplayField" class="game-display-panel">
+            <button class="close-stream-btn" onclick="toggleRaccoonFrame()">✕ Close Active Game</button>
+            <div style="width: 100%; display: flex; justify-content: center;">
+                <iframe id="embeddedRaccoonIframe" src="" width="800" height="600" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <!-- Footer Information Status Module -->
