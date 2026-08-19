@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learning V4</title>
     <style>
-        /* Exact Original Theme & Variables */
         :root {
-            --bg-primary: #0b0c0b;
-            --bg-secondary: #121312;
-            --bg-card: #181918;
+            --bg-primary: #0a0b0a;
+            --bg-secondary: #111211;
+            --bg-card: #171817;
             --text-main: #ffffff;
-            --text-muted: #848684;
+            --text-muted: #808280;
             --theme-lime: #a3e635;
         }
 
@@ -26,7 +25,7 @@
             overflow: hidden;
         }
 
-        /* Sidebar Navigation Component */
+        /* Sidebar Navigation Layout */
         .sidebar {
             width: 240px;
             background-color: var(--bg-secondary);
@@ -34,7 +33,7 @@
             display: flex;
             flex-direction: column;
             gap: 32px;
-            border-right: 1px solid #1f211f;
+            border-right: 1px solid #1c1d1c;
         }
 
         .logo-area {
@@ -47,7 +46,6 @@
 
         .logo-icon {
             color: var(--theme-lime);
-            font-size: 24px;
         }
 
         .nav-section {
@@ -74,7 +72,7 @@
             color: var(--text-muted);
             text-decoration: none;
             font-size: 14px;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s;
         }
 
         .nav-item:hover, .nav-item.active {
@@ -87,7 +85,7 @@
         }
 
         .system-badge {
-            background-color: #1a2e05;
+            background-color: #162904;
             color: var(--theme-lime);
             padding: 4px 8px;
             border-radius: 4px;
@@ -97,12 +95,12 @@
             margin-top: auto;
         }
 
-        /* Workspace Main Content Frame */
+        /* Main Context View Area */
         .main-content {
             flex: 1;
             padding: 40px;
             overflow-y: auto;
-            background-image: radial-gradient(circle at 50% 50%, #152205 0%, var(--bg-primary) 70%);
+            background-image: radial-gradient(circle at 50% 30%, #121e05 0%, var(--bg-primary) 65%);
         }
 
         .top-nav {
@@ -118,7 +116,7 @@
         }
 
         .badge-v4 {
-            background-color: #273e07;
+            background-color: #213506;
             color: var(--theme-lime);
             padding: 6px 12px;
             border-radius: 20px;
@@ -142,35 +140,27 @@
             font-size: 16px;
         }
 
-        /* App Grid Configuration */
+        /* Center Display Grid Components */
         .app-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 24px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .app-card {
             background-color: var(--bg-secondary);
-            border: 1px solid #1f211f;
+            border: 1px solid #1c1d1c;
             border-radius: 16px;
             padding: 24px;
             display: flex;
             flex-direction: column;
             gap: 16px;
-            cursor: pointer;
-            position: relative;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            transition: border-color 0.2s ease;
         }
 
         .app-card:hover {
-            transform: translateY(-4px);
-            border-color: #3b5c0e;
-        }
-
-        .app-card.featured-active {
-            border-color: var(--theme-lime);
-            box-shadow: 0 0 15px rgba(163, 230, 53, 0.25);
+            border-color: #35530e;
         }
 
         .app-icon {
@@ -197,62 +187,20 @@
             line-height: 1.4;
         }
 
-        .arrow-indicator {
-            position: absolute;
-            bottom: 24px;
-            right: 24px;
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        /* Inline Game Display Stream Screen */
-        .game-display-panel {
-            display: none;
-            background-color: var(--bg-secondary);
-            border: 2px solid var(--theme-lime);
-            border-radius: 20px;
-            padding: 24px;
-            margin-top: 24px;
-            text-align: center;
-            position: relative;
-        }
-
-        .close-stream-btn {
-            background-color: var(--theme-lime);
-            color: #000000;
-            border: none;
-            padding: 8px 16px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-bottom: 15px;
-        }
-
-        .close-stream-btn:hover {
-            background-color: #bbf746;
-        }
-
-        iframe {
-            background: #000;
-            border-radius: 12px;
-            border: none;
-            max-width: 100%;
-        }
-
-        /* Bottom Status Bars */
-        .footer-status-bar {
-            position: fixed;
-            bottom: 20px;
-            right: 40px;
+        /* Peripheral Status Toast Elements */
+        .input-toast {
             display: flex;
-            gap: 16px;
+            align-items: center;
+            gap: 12px;
+            background-color: var(--bg-secondary);
+            border: 1px solid #1c1d1c;
+            padding: 12px 20px;
+            border-radius: 30px;
+            margin-top: 12px;
+            width: fit-content;
         }
 
-        .status-pill {
-            background-color: var(--bg-secondary);
-            border: 1px solid #1f211f;
-            padding: 8px 16px;
-            border-radius: 30px;
+        .toast-text {
             font-size: 13px;
             color: var(--text-muted);
         }
@@ -260,16 +208,16 @@
 </head>
 <body>
 
-    <!-- Original Left Navigation Sidebar -->
+    <!-- Left Navbar Framework Structure -->
     <aside class="sidebar">
         <div class="logo-area">
-            <span class="logo-icon">⭐</span> Learning V4
+            <span class="logo-icon">★</span> Learning V4
         </div>
         
         <nav class="nav-section">
             <div class="nav-label">Hola</div>
             <a href="#" class="nav-item active">🏠 Home</a>
-            <a href="#" class="nav-item">☁️ Cloud Gaming</a>
+            <a href="cloud-gaming.html" class="nav-item">☁️ Cloud Gaming</a>
             <a href="#" class="nav-item">🎮 Games</a>
             <a href="#" class="nav-item">🎬 Movies</a>
         </nav>
@@ -282,7 +230,7 @@
         <div class="system-badge">V4</div>
     </aside>
 
-    <!-- Right Content Dashboard Space -->
+    <!-- Main Dynamic Desktop Display Section -->
     <main class="main-content">
         <div class="top-nav">
             <h4>Home</h4>
@@ -293,52 +241,69 @@
         <h1 class="welcome-title">Welcome back</h1>
         <p class="subtitle">almost 1 year old</p>
 
-        <!-- Grid Cards Setup -->
+        <!-- Main Interface Portal Items Grid -->
         <div class="app-grid">
             
-            <div class="app-card">
-                <div class="app-icon">☁️</div>
-                <h3>Cloud Gaming</h3>
-                <p>Stream games from the cloud</p>
-                <span class="arrow-indicator">→</span>
-            </div>
+            <a href="cloud-gaming.html" style="text-decoration: none; color: inherit;">
+                <div class="app-card">
+                    <div class="app-icon">☁️</div>
+                    <h3>Cloud Gaming</h3>
+                    <p>Stream games from the cloud</p>
+                </div>
+            </a>
 
-            <div class="app-card">
-                <div class="app-icon">🎮</div>
-                <h3>Games</h3>
-                <p>some of these games dont support controller</p>
-                <span class="arrow-indicator">→</span>
-            </div>
+            <a href="drifthunterspro.html" style="text-decoration: none; color: inherit;">
+                <div class="app-card">
+                    <div class="app-icon">🎮</div>
+                    <h3>Games</h3>
+                    <p>some of these games dont support controller</p>
+                </div>
+            </a>
 
             <div class="app-card">
                 <div class="app-icon">🎬</div>
                 <h3>Movies</h3>
                 <p>Stream movies & shows</p>
-                <span class="arrow-indicator">→</span>
             </div>
 
-            <!-- Fixed Click Target Raccoon Retail Card Component -->
-            <div id="raccoonButtonCard" class="app-card" onclick="toggleRaccoonFrame()">
-                <div class="app-icon" style="background-color: #273e07;">🦝</div>
-                <h3>Raccoon Retail</h3>
-                <p>Play the unblocked supermarket cleaning simulation directly here.</p>
-                <span id="cardIndicatorSpan" class="arrow-indicator" style="color: var(--theme-lime)">▶</span>
-            </div>
+            <!-- 🦝 SEPARATE APP ROUTE LINK CARD 🦝 -->
+            <a href="raccoon-retail.html" style="text-decoration: none; color: inherit;">
+                <div class="app-card" style="border: 1px solid var(--theme-lime);">
+                    <div class="app-icon" style="background-color: #213506;">🦝</div>
+                    <h3>Raccoon Retail</h3>
+                    <p>Launch the clean, unblocked full screen separate module file.</p>
+                </div>
+            </a>
 
             <div class="app-card">
                 <div class="app-icon">⚙️</div>
                 <h3>Settings</h3>
                 <p>Color themes</p>
-                <span class="arrow-indicator">→</span>
             </div>
+
         </div>
 
-        <!-- Integrated Inline Play Field (Shows underneath your grid layout) -->
-        <div id="inlineGameDisplayField" class="game-display-panel">
-            <button class="close-stream-btn" onclick="toggleRaccoonFrame()">✕ Close Active Game</button>
-            <div style="width: 100%; display: flex; justify-content: center;">
-                <iframe id="embeddedRaccoonIframe" src="" width="800" height="600" allowfullscreen></iframe>
-            </div>
+        <!-- Preserved Peripheral Connection Notification Components -->
+        <div class="input-toast" id="input-toast-mouse">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px; color:var(--theme-lime);">
+                <rect x="6" y="3" width="12" height="18" rx="6"/>
+                <path d="M12 7v4"/>
+            </svg>
+            <span class="toast-text">Mouse connected</span>
         </div>
 
-        <!-- Footer Information Status Module -->
+        <div class="input-toast" id="input-toast-controller">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px; color:var(--theme-lime);">
+                <rect x="2" y="6" width="20" height="12" rx="4"/>
+                <path d="M7 12h3M8.5 10.5v3"/>
+                <circle cx="16" cy="11" r="1" fill="currentColor" stroke="none"/>
+                <circle cx="18" cy="13" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+            <span class="toast-text">Controller connected</span>
+        </div>
+    </main>
+
+    <!-- App Router Script Hook -->
+    <script src="js/app.js"></script>
+</body>
+</html>
