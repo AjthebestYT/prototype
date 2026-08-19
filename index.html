@@ -1,32 +1,361 @@
-<!-- 1. Add this Game Card right next to your Drift Hunters Pro card -->
-<div class="card" onclick="openRaccoonGame()" style="cursor: pointer;">
-    <div style="background-color: #222; border-radius: 6px; padding: 15px; margin-bottom: 10px; border: 1px solid #333;">
-        <span style="font-size: 24px;">🦝</span>
-    </div>
-    <h3>Raccoon Retail</h3>
-    <p style="color: #a3e635; font-size: 12px;">● Embedded App Ready</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning V4</title>
+    <style>
+        /* Restored Original Style Variables */
+        :root {
+            --bg-primary: #0b0c0b;
+            --bg-secondary: #121312;
+            --bg-card: #181918;
+            --text-main: #ffffff;
+            --text-muted: #848684;
+            --theme-lime: #a3e635;
+        }
 
-<!-- 2. Paste this Popup Frame at the very bottom of your file, right before the closing </body> tag -->
-<div id="gameModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; justify-content: center; align-items: center;">
-    <div style="background: #1e1e1e; border: 2px solid #a3e635; padding: 15px; border-radius: 12px; position: relative; width: 840px; text-align: center;">
-        <button onclick="closeRaccoonGame()" style="position: absolute; top: -40px; right: 0; background: #a3e635; color: black; border: none; padding: 8px 15px; font-weight: bold; border-radius: 4px; cursor: pointer;">✕ Close Game</button>
-        <h2 style="color: #a3e635; margin-top: 0; margin-bottom: 10px; font-family: sans-serif;">Raccoon Retail</h2>
-        <iframe id="gameFrame" src="" width="800" height="600" frameborder="0" allowfullscreen></iframe>
-    </div>
-</div>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-<script>
-function openRaccoonGame() {
-    document.getElementById('gameFrame').src = "https://itch.io";
-    document.getElementById('gameModal').style.display = "flex";
-// Replace your old function with this updated version:
-function openRaccoonGame() {
-    // This alternative link bypasses the Local Network error entirely
-    document.getElementById('gameFrame').src = "https://kbhgames.com";
-    document.getElementById('gameModal').style.display = "flex";
-}
+        /* Sidebar Component */
+        .sidebar {
+            width: 240px;
+            background-color: var(--bg-secondary);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            border-right: 1px solid #1f211f;
+        }
 
-</script>
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--text-main);
+        }
 
+        .logo-icon {
+            color: var(--theme-lime);
+            font-size: 24px;
+        }
 
+        .nav-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            padding-left: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--text-main);
+            background-color: var(--bg-card);
+        }
+
+        .nav-item.active {
+            border-left: 3px solid var(--theme-lime);
+        }
+
+        .system-badge {
+            background-color: #1a2e05;
+            color: var(--theme-lime);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        /* Main Workspace Content */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background-image: radial-gradient(circle at 50% 50%, #152205 0%, var(--bg-primary) 70%);
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .top-nav h4 {
+            margin: 0;
+            color: var(--text-muted);
+        }
+
+        .badge-v4 {
+            background-color: #273e07;
+            color: var(--theme-lime);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .welcome-title {
+            font-size: 48px;
+            margin: 0 0 8px 0;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin: 0 0 48px 0;
+            font-size: 16px;
+        }
+
+        /* Dashboard App/Game Cards Layout */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .app-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid #1f211f;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+            border-color: #3b5c0e;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .app-card.featured {
+            border-color: #558c0a;
+            box-shadow: 0 0 20px rgba(163, 230, 53, 0.1);
+        }
+
+        .app-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--theme-lime);
+        }
+
+        .app-card h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .app-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .arrow-indicator {
+            position: absolute;
+            bottom: 24px;
+            right: 24px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Pop-up Fullscreen Game Container */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(4, 5, 4, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background: var(--bg-secondary);
+            border: 2px solid var(--theme-lime);
+            padding: 20px;
+            border-radius: 20px;
+            position: relative;
+            width: 840px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+
+        .close-button {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            background: var(--theme-lime);
+            color: #000000;
+            border: none;
+            padding: 8px 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .close-button:hover {
+            background: #bbf746;
+        }
+
+        .modal-box h2 {
+            color: var(--theme-lime);
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 24px;
+        }
+
+        iframe {
+            background: #000;
+            border-radius: 10px;
+            border: none;
+        }
+
+        /* Footer Info Bar Component */
+        .footer-status-bar {
+            position: fixed;
+            bottom: 20px;
+            right: 40px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .status-pill {
+            background-color: var(--bg-secondary);
+            border: 1px solid #1f211f;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-pill strong {
+            color: var(--text-main);
+        }
+
+        .indicator-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--theme-lime);
+            border-radius: 50%;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Left Navigation Bar Module -->
+    <aside class="sidebar">
+        <div class="logo-area">
+            <span class="logo-icon">⭐</span> Learning V4
+        </div>
+        
+        <nav class="nav-section">
+            <div class="nav-label">Hola</div>
+            <a href="#" class="nav-item active">🏠 Home</a>
+            <a href="#" class="nav-item">☁️ Cloud Gaming</a>
+            <a href="#" class="nav-item">🎮 Games</a>
+            <a href="#" class="nav-item">🎬 Movies</a>
+        </nav>
+
+        <nav class="nav-section" style="margin-top: 24px;">
+            <div class="nav-label">System</div>
+            <a href="#" class="nav-item">⚙️ Settings</a>
+        </nav>
+
+        <div class="system-badge">V4</div>
+    </aside>
+
+    <!-- Right Workspace Dashboard Window -->
+    <main class="main-content">
+        <div class="top-nav">
+            <h4>Home</h4>
+            <span style="color: var(--text-muted); font-size: 14px;">Learning V4</span>
+        </div>
+
+        <div class="badge-v4">◆ LEARNING V4</div>
+        <h1 class="welcome-title">Welcome back</h1>
+        <p class="subtitle">almost 1 year old</p>
+
+        <!-- Dynamic Content Grid Container -->
+        <div class="app-grid">
+            
+            <div class="app-card">
+                <div class="app-icon">☁️</div>
+                <h3>Cloud Gaming</h3>
+                <p>Stream games from the cloud</p>
+                <span class="arrow-indicator">→</span>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon">🎮</div>
+                <h3>Games</h3>
+                <p>some of these games dont support controller</p>
+                <span class="arrow-indicator">→</span>
+            </div>
+
+            <div class="app-card">
+                <div class="app-icon">🎬</div>
+                <h3>Movies</h3>
+                <p>Stream movies & shows</p>
+                <span class="arrow-indicator">→</span>
+            </div>
+
+            <!-- 🦝 NEW DYNAMIC EMBEDDED APPLICATION CARD 🦝 -->
+            <div class="app-card featured" onclick="openRaccoonGame()">
+                <div class="app-icon" style="background-color: #273e07;">🦝</div>
+                <h3>Raccoon Retail</h3>
